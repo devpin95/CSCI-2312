@@ -15,8 +15,8 @@ int main() {
     vector<int> my_items;
 
     try {
-        reader.readBooks(store, "books.txt");
-        reader.readVideos(store, "videos.txt");
+        reader.readBooks(store, "C:\\Users\\devpin\\Documents\\school\\CSCI2312\\final\\books.txt");
+        reader.readVideos(store, "C:\\Users\\devpin\\Documents\\school\\CSCI2312\\final\\videos.txt");
     } catch (FileException e) {
         cout << "Could not load file" << endl;
     }
@@ -152,23 +152,26 @@ void search( Store& store ) {
         case 1: {
             cout << "Title: ";
             getline(cin, target);
-            vector<Asset *> titles = searcher.searchByTitle(store, target);
+            vector< std::shared_ptr<Asset> > titles = searcher.searchByTitle(store, target);
             store.displayList(titles);
         }
             break;
         case 2: {
             cout << "Author: ";
             getline(cin, target);
-            vector<Asset *> authors = searcher.searchByAuthor(store, target);
+            vector< std::shared_ptr<Asset> > authors = searcher.searchByAuthor(store, target);
             store.displayList(authors);
         }
             break;
         case 3: {
             cout << "Genre: ";
             getline(cin, target);
-            vector<Asset *> genres = searcher.searchByGenre(store, target);
+            vector< std::shared_ptr<Asset> > genres = searcher.searchByGenre(store, target);
             store.displayList( genres );
         }
+
+        default:
+            break;
     }
 }
 

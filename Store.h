@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include <memory>
 #include "Search.h"
 #include "Asset.h"
 
@@ -19,10 +20,10 @@ public:
 
     Store();
     ~Store();
-    void addAsset( Asset* );
+    void addAsset( std::shared_ptr<Asset> );
     void displayInventory() const;
     void displayAvailableInventory();
-    void displayList( vector<Asset*>& );
+    void displayList( vector< std::shared_ptr< Asset > >& );
 
     //Generic Search
     template<typename TT>
@@ -36,11 +37,12 @@ public:
     bool returnItem( int tag );
 
 private:
-    vector<Asset*> inventory; //holds every asset that the store owns, available and checkout
-    vector<Asset*> available; //holds every asset that is available for renting
-    vector<Asset*> checkedout; //holds every asset that has been rented
+    vector< std::shared_ptr<Asset> > inventory; //holds every asset that the store owns, available and checkout
+    vector< std::shared_ptr<Asset> > available; //holds every asset that is available for renting
+    vector< std::shared_ptr<Asset> > checkedout; //holds every asset that has been rented
 };
 
 std::ostream& operator<<( std::ostream& out, const Asset* asset );
+std::ostream& operator<<( std::ostream& out, const std::shared_ptr<Asset> asset );
 
 #endif //FINAL_STORE_H

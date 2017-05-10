@@ -1,6 +1,6 @@
 #include "Search.h"
 
-vector<Asset*> Search::searchByTitle( const Store& store, const string& title ) {
+vector< std::shared_ptr< Asset > > Search::searchByTitle( const Store& store, const string& title ) {
     CompTitle comparator;
     comparator.title = title;
     store.search( comparator );
@@ -10,7 +10,7 @@ vector<Asset*> Search::searchByTitle( const Store& store, const string& title ) 
     return comparator.list;
 }
 
-vector<Asset*> Search::searchByAuthor( const Store& store, const string& author ) {
+vector< std::shared_ptr< Asset > > Search::searchByAuthor( const Store& store, const string& author ) {
     CompCreator comparator;
     comparator.creator = author;
     store.search( comparator );
@@ -20,7 +20,7 @@ vector<Asset*> Search::searchByAuthor( const Store& store, const string& author 
     return comparator.list;
 }
 
-vector<Asset*> Search::searchByGenre( const Store& store, const string& genre ) {
+vector< std::shared_ptr< Asset > > Search::searchByGenre( const Store& store, const string& genre ) {
     CompGenre comparator;
     comparator.genre = genre;
     store.search( comparator );

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "Asset.h"
 #include "Store.h"
 #include "Sort.h"
@@ -19,8 +20,8 @@ private:
     Sort sorter;
     struct CompTitle {
         string title;
-        vector<Asset*> list;
-        void operator()( Asset* asset ) {
+        vector< std::shared_ptr<Asset> > list;
+        void operator()( std::shared_ptr<Asset> asset ) {
             if ( (*asset).getTitle().find( title ) != string::npos ) {
                 list.push_back( asset );
             }
@@ -29,8 +30,8 @@ private:
 
     struct CompCreator {
         string creator;
-        vector<Asset*> list;
-        void operator()( Asset* asset ) {
+        vector< std::shared_ptr<Asset> > list;
+        void operator()( std::shared_ptr<Asset> asset ) {
             if ( (*asset).getCreator().find( creator ) != string::npos ) {
                 list.push_back( asset );
             }
@@ -39,8 +40,8 @@ private:
 
     struct CompGenre {
         string genre;
-        vector<Asset*> list;
-        void operator()( Asset* asset ) {
+        vector< std::shared_ptr<Asset> > list;
+        void operator()( std::shared_ptr<Asset> asset ) {
             if ( (*asset).getGenre().find( genre ) != string::npos ) {
                 list.push_back( asset );
             }
@@ -51,9 +52,9 @@ public:
     Search( ) = default;
     //void sort( vector<Asset*>& );
 
-    vector<Asset*> searchByTitle( const Store&, const string& );
-    vector<Asset*> searchByAuthor( const Store&, const string& );
-    vector<Asset*> searchByGenre( const Store&, const string& );
+    vector< std::shared_ptr< Asset > > searchByTitle( const Store&, const string& );
+    vector< std::shared_ptr< Asset > > searchByAuthor( const Store&, const string& );
+    vector< std::shared_ptr< Asset > > searchByGenre( const Store&, const string& );
 
 };
 

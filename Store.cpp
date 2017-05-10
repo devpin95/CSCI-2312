@@ -7,16 +7,12 @@ Store::Store() {
 }
 
 Store::~Store() {
-    for ( auto i = inventory.size(); i >= 0; --i ) {
-        Asset* tempPtr = inventory[i];
-        inventory.pop_back();
-        delete tempPtr;
-    }
+    //EMPTY BODY
 }
 
-void Store::addAsset( Asset* asset ) {
+void Store::addAsset( std::shared_ptr< Asset > asset ) {
 
-    std::cout << asset->getTitle() << endl;
+    //std::cout << asset->getTitle() << endl;
 
     inventory.push_back( asset );
     if ( asset->isAvailable() ) {
@@ -44,12 +40,13 @@ int Store::rentItem(int tag) {
     if ( count != -1 ) {
         //copy the pointer in the availables list to a new pointer
         //the delete the item from the availabe list and make it unavailable for renting
-        Asset* assetPtr = *(available.begin() + count);
-        assetPtr->setAvailability(false);
-        available.erase( available.begin() + count );
+        //Asset* assetPtr = (available.begin() + count);
+        available[count]->setAvailability(false);
 
         //add the item to the checkout list
-        checkedout.push_back( assetPtr );
+        checkedout.push_back( available[count] );
+
+        available.erase( available.begin() + count );
     }
 
     return rent_tag;
@@ -73,9 +70,9 @@ bool Store::returnItem( int tag ) {
     //since the item is ours, create a copy of the pointer and add it back to the available list
     //then remove it from the checkedout list and make it available again for renting
     if ( is_ours ) {
-        Asset* assetPtr = *(checkedout.begin() + count);
-        assetPtr->setAvailability( true );
-        available.push_back( assetPtr );
+        //Asset* assetPtr = *(checkedout.begin() + count);
+        checkedout[count]->setAvailability( true );
+        available.push_back( checkedout[count] );
         checkedout.erase( checkedout.begin()+count );
     }
 
@@ -89,13 +86,14 @@ void Store::displayAvailableInventory() {
     displayList( available );
 }
 
-void Store::displayList( vector<Asset*>& list ) {
+void Store::displayList( vector< std::shared_ptr< Asset > >& list ) {
     //print out the headers
-    cout << std::left;
+    cout << std::left << endl;
     cout << std::setw( 10 ) << "Item#";
     cout << std::setw( 25 ) << "Title";
     cout << std::setw( 25 ) << "Author";
     cout << std::setw( 25 ) << "Genre";
+    cout << std::setw( 10 ) << "Type";
     cout << std::setw( 25 ) << "Length(Pages/runtime)";
     cout << std::setw( 25 ) << "Age Rating";
     cout << std::setw( 25 ) << "Publish/Release Date";
@@ -117,11 +115,13 @@ void Store::displayList( vector<Asset*>& list ) {
             cout << list[i] << endl;
         }
     }
+
+    cout << endl;
 }
 
 void Store::displayInventory() const {
     //print out the headers
-    cout << "Inventory: " << endl;
+    cout << endl << "Inventory: " << endl;
     cout << std::left;
     cout << std::setw( 10 ) << "Item#";
     cout << std::setw( 25 ) << "Title";
@@ -144,6 +144,8 @@ void Store::displayInventory() const {
         //print out each asset in the inventory
         cout << inventory[i] << endl;
     }
+
+    cout << endl;
 }
 
 std::ostream& operator<<( std::ostream& out, const Asset* asset ) {
@@ -189,5 +191,10 @@ std::ostream& operator<<( std::ostream& out, const Asset* asset ) {
         out << std::setw( 25 ) << "Checked Out";
     }
 
+    return out;
+}
+
+std::ostream& operator<<( std::ostream& out, const std::shared_ptr<Asset> asset ) {
+    out << asset.get();
     return out;
 }
