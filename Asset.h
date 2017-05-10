@@ -51,7 +51,7 @@ public:
     string getReleaseDate( void ) const  { return release_date; };
 
     //helper functions
-    virtual void readAssetFromFile( std::ifstream& ) = 0; //pure virtual
+    //virtual void readAssetFromFile( std::ifstream& ) = 0; //pure virtual
     bool isAvailable() const { return availability; };
     bool operator<( Asset* asset ) {
       return this->asset_tag < asset->asset_tag;

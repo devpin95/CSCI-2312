@@ -21,46 +21,46 @@ public:
     Video( void ) : Asset() { /*EMPTY BODY*/ };
     Video( const string& t ) : Asset( t ) { /*EMPTY BODY*/ };
 
-    virtual void readAssetFromFile( std::ifstream& infile ) {
-        //manually read a video asset from a file
-
-        string age;
-        string movie_rating;
-        string avail;
-        string trash;
-
-        getline(infile, title);
-        getline(infile, creator);
-        getline(infile, genre);
-        getline(infile, count);
-        getline(infile, movie_rating);
-        getline(infile, age);
-        getline(infile, release_date);
-        getline(infile, avail);
-        getline(infile, trash);
-
-        if (age == "Adults") {
-            Asset::setAgeRating(Asset::ADULTS);
-        } else if (age == "Teens") {
-            Asset::setAgeRating(Asset::TEENS);
-        } else if (age == "Children") {
-            Asset::setAgeRating(Asset::CHILDREN);
-        }
-
-        if ( movie_rating == "PG" ) {
-            this->setAgeRating( Video::PG );
-        } else if ( movie_rating == "PG-13" ) {
-            this->setAgeRating( Video::PG_13 );
-        } else if ( movie_rating == "R" ) {
-            this->setAgeRating( Video::R );
-        }
-
-        if (avail == "1") {
-            this->availability = true;
-        } else {
-            this->availability = false;
-        }
-    };
+//    virtual void readAssetFromFile( std::ifstream& infile ) {
+//        //manually read a video asset from a file
+//
+//        string age;
+//        string movie_rating;
+//        string avail;
+//        string trash;
+//
+//        getline(infile, title);
+//        getline(infile, creator);
+//        getline(infile, genre);
+//        getline(infile, count);
+//        getline(infile, movie_rating);
+//        getline(infile, age);
+//        getline(infile, release_date);
+//        getline(infile, avail);
+//        getline(infile, trash);
+//
+//        if (age == "Adults") {
+//            Asset::setAgeRating(Asset::ADULTS);
+//        } else if (age == "Teens") {
+//            Asset::setAgeRating(Asset::TEENS);
+//        } else if (age == "Children") {
+//            Asset::setAgeRating(Asset::CHILDREN);
+//        }
+//
+//        if ( movie_rating == "PG" ) {
+//            this->setAgeRating( Video::PG );
+//        } else if ( movie_rating == "PG-13" ) {
+//            this->setAgeRating( Video::PG_13 );
+//        } else if ( movie_rating == "R" ) {
+//            this->setAgeRating( Video::R );
+//        }
+//
+//        if (avail == "1") {
+//            this->availability = true;
+//        } else {
+//            this->availability = false;
+//        }
+//    };
     virtual void setAgeRating( const video_age_rating& r ) { video_rating = r; };
     string getVideoRating() const {
         if ( video_rating == 0 ) {
